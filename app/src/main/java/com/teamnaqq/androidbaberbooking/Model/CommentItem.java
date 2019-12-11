@@ -2,7 +2,7 @@ package com.teamnaqq.androidbaberbooking.Model;
 
 public class CommentItem {
 
-    private String time,date,cmt,customer,imgCmt;
+    private String time,date,content,customer,imgCmt;
 
     public String getTime() {
         return time;
@@ -20,12 +20,12 @@ public class CommentItem {
         this.date = date;
     }
 
-    public String getCmt() {
-        return cmt;
+    public String getContent() {
+        return content;
     }
 
-    public void setCmt(String cmt) {
-        this.cmt = cmt;
+    public void setContent(String content) {
+        this.content = content;
     }
 
     public String getCustomer() {

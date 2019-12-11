@@ -124,7 +124,7 @@ public class ShoppingFragment extends Fragment implements IShoppingDataLoadListe
     @OnClick(R.id.chip_wax)
     void waxChipClick() {
         setSelectedChip(chip_wax);
-        loadShoppingItem("Wax");
+        loadShoppingItem("Toc");
         loadCommentItem("CMTToc");
         i=0;
     }
@@ -133,7 +133,7 @@ public class ShoppingFragment extends Fragment implements IShoppingDataLoadListe
     @OnClick(R.id.chip_spray)
     void sprayChipClick() {
         setSelectedChip(chip_spray);
-        loadShoppingItem("Spray");
+        loadShoppingItem("Mat");
         loadCommentItem("CMTMat");
         i=1;
 
@@ -227,13 +227,9 @@ public class ShoppingFragment extends Fragment implements IShoppingDataLoadListe
 
         String msg1=matcher.replaceAll(" ");
 
-        Log.e("khoangcach",msg1);
-        Log.e("khoangcach1",msg);
 
         if(!msg.equals("")||imageView!=null){
             sendComment(name,time,date,msg1,sImg);
-        }else {
-            Log.e("check","aaaa");
         }
 
         if(imageView!=null){
@@ -257,17 +253,17 @@ public class ShoppingFragment extends Fragment implements IShoppingDataLoadListe
 
 
         if(i==0){
-            db.collection("CMT").document("CMTToc").collection("cmt").add(newContact);
+            db.collection("Comment").document("CMTToc").collection("comment").add(newContact);
             loadCommentItem("CMTToc");
         }else if(i==1){
-            db.collection("CMT").document("CMTMat").collection("cmt").add(newContact);
+            db.collection("Comment").document("CMTMat").collection("comment").add(newContact);
             loadCommentItem("CMTMat");
         }
 
     }
 
     private void loadShoppingItem(String itemMenu) {
-        shoppingItemRef = FirebaseFirestore.getInstance().collection("Shopping")
+        shoppingItemRef = FirebaseFirestore.getInstance().collection("Service")
                 .document(itemMenu)
                 .collection("Items");
 
@@ -293,8 +289,8 @@ public class ShoppingFragment extends Fragment implements IShoppingDataLoadListe
     }
 
     private void loadCommentItem(String itemMenu) {
-        commentItemRef = FirebaseFirestore.getInstance().collection("CMT")
-                .document(itemMenu).collection("cmt");
+        commentItemRef = FirebaseFirestore.getInstance().collection("Comment")
+                .document(itemMenu).collection("comment");
 
         Log.e(TAG, String.valueOf(commentItemRef));
 
@@ -347,7 +343,7 @@ public class ShoppingFragment extends Fragment implements IShoppingDataLoadListe
         unbinder = ButterKnife.bind(this, view);
         iShoppingDataLoadListener = this;
         iCommentDataLoadListener=this;
-        loadShoppingItem("Wax");
+        loadShoppingItem("Toc");
         loadCommentItem("CMTToc");
         initView();
 

@@ -58,7 +58,7 @@ public class CommentApdapter  extends RecyclerView.Adapter<CommentApdapter.MyVie
 
 
         holder.tv_custumer.setText(commentItem.getCustomer());
-        holder.tv_cmt.setText(commentItem.getCmt());
+        holder.tv_cmt.setText(commentItem.getContent());
         holder.tv_date.setText(commentItem.getDate());
         holder.tv_time.setText(commentItem.getTime());
 

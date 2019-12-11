@@ -134,6 +134,7 @@ public class BookingStep4Fragment extends Fragment {
             @Override
             public void onSuccess(Void aVoid) {
                 addToUserBooking(bookingInformation);
+                addHistory(bookingInformation);
 
 
             }
@@ -151,6 +152,8 @@ public class BookingStep4Fragment extends Fragment {
                 .collection("User")
                 .document(Common.currentUser.getPhoneNumber())
                 .collection("Booking");
+
+
 
         Calendar calendar = Calendar.getInstance();
         calendar.set(Calendar.DATE, 0);
@@ -263,6 +266,41 @@ public class BookingStep4Fragment extends Fragment {
                     }
                 });
     }
+
+    private void addHistory(BookingInformation bookingInformation) {
+
+        final CollectionReference userBooking = FirebaseFirestore.getInstance()
+                .collection("History")
+                .document(Common.currentUser.getPhoneNumber())
+                .collection("Booking");
+
+
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.DATE, 0);
+        calendar.set(Calendar.HOUR_OF_DAY, 0);
+        calendar.set(Calendar.MINUTE, 0);
+        Timestamp timestamp = new Timestamp(calendar.getTime());
+
+        userBooking.whereGreaterThanOrEqualTo("timestamp", timestamp)
+                .whereEqualTo("done", false)
+                .limit(1)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.getResult().isEmpty()) {
+                            userBooking.document()
+                                    .set(bookingInformation);
+                            }
+                        }
+                    });
+
+    }
+
+
+
+
 
     private void addToCalendar(Calendar bookingDate, String startDate) {
         String startTime = Common.convertTimeSlotToString(Common.currentTimeSlot);
